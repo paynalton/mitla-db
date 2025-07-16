@@ -1,0 +1,55 @@
+# mitla-db
+
+**mitla-db** is a Composer package designed to provide reusable libraries for implementing a database version control system compatible with MariaDB and MySQL.
+
+## Features
+
+- Database migration management
+- Version tracking for database schema changes
+- Support for applying, reverting, and seeding migrations
+- Compatible with MariaDB and MySQL
+- Easily integrates with other PHP projects via Composer
+
+## Installation
+
+Add the package to your project using Composer:
+
+```bash
+composer require paynalton/mitla-db
+```
+
+## Usage
+
+1. Configure your environment variables or INI file for database credentials.
+2. Use the migration manager to apply or revert migrations.
+3. Organize your migration stages and SQL files as described in the documentation.
+
+## Example
+
+```php
+use paynalton\MitlaDB\Config\EnvConfig;
+use paynalton\MitlaDB\Migration\ManagerMigration;
+
+$config = new EnvConfig('/path/to/config.ini');
+$migrator = new ManagerMigration($config);
+
+// Apply migrations
+$migrator->up();
+
+// Revert migrations
+$migrator->down();
+```
+
+## Requirements
+
+- PHP 7.4 or higher
+- MariaDB or MySQL database
+- Composer
+
+## License
+
+MIT License
+
+## Author
+
+paynalton
