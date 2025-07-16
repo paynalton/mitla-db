@@ -1,0 +1,21 @@
+{
+    "name": "paynalton/mitladb",
+    "description": "Version control for MySQL/MariaDB schemas",
+    "type": "library",
+    "require": {
+        "illuminate/database": "^8.58"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Paynalton\\Mitladb\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Paynalton",
+            "email": "cxescalona@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
