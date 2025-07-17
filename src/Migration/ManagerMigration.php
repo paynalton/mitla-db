@@ -129,7 +129,7 @@ class ManagerMigration extends Base{
             unset($moduleStages[0]);
             unset($moduleStages[1]);
             foreach($moduleStages as $moduleStage){
-                if(!$stages[$moduleStage]){
+                if( !array_key_exists( $moduleStage, $stages ) ){
                     $stages[$moduleStage] = [];
                 }
                 $path = $origin . '/'. $moduleStage;
