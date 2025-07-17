@@ -3,6 +3,7 @@
     "description": "Version control for MySQL/MariaDB schemas",
     "type": "library",
     "require": {
+        "php": ">=7.4",
         "illuminate/database": "^8.58"
     },
     "license": "MIT",
