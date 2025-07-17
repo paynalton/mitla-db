@@ -96,7 +96,7 @@ class ManagerMigration extends Base{
             WHERE
                 table_schema = '".$this->_credentials->DB_DATABASE."' and table_name<>'SO____migration_status';");
         foreach($tables as $k=>$t){
-            $tables[$k]="DROP TABLE IF EXISTS `". ($t->TABLE_NAME ? $t->TABLE_NAME : $t->table_name)."`;";
+            $tables[$k]="DROP TABLE IF EXISTS `". ( property_exists( $t, "TABLE_NAME") ? $t->TABLE_NAME : $t->table_name)."`;";
         }
         array_unshift($tables,"SET FOREIGN_KEY_CHECKS = 0;");
         $tables[]="SET FOREIGN_KEY_CHECKS = 1;";
