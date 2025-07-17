@@ -1,6 +1,6 @@
 <?php
 
-namespace Paynalton\MitlaDB\Config;
+namespace Paynalton\Mitladb\Config;
 
 /**
  * Class EnvConfig

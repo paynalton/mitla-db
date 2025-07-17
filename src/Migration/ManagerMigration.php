@@ -1,8 +1,8 @@
 <?php
 
-namespace Paynalton\MitlaDB\Migration;
+namespace Paynalton\Mitladb\Migration;
 
-use Paynalton\MitlaDB\Config\EnvConfig;
+use Paynalton\Mitladb\Config\EnvConfig;
 use Illuminate\Database\Capsule\Manager as Base;
 
 /**

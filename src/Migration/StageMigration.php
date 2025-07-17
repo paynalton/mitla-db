@@ -1,5 +1,5 @@
 <?php
-namespace Paynalton\MitlaDB\Migration;
+namespace Paynalton\Mitladb\Migration;
 
 use Exception;
 use Illuminate\Database\Capsule\Manager;
