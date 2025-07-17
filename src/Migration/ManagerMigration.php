@@ -160,7 +160,7 @@ class ManagerMigration extends Base{
     protected function getActiveModules(){
         $moduleList = [];
         $modulesDir=@scandir( getcwd() .'/modules/');
-        $activeModules = explode(",", $_ENV["MODULES"]);
+        $activeModules = array_key_exists( "MODULES", $_ENV ) && strlen($_ENV["MODULES"]) ? explode(",", ( $_ENV["MODULES"] )) : [];
         if(count($activeModules) > 1){
             foreach($activeModules as $module){
                 $finder=array_search($module, $modulesDir);
