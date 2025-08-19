@@ -10,6 +10,7 @@ use Illuminate\Database\Capsule\Manager;
  * Represents a migration stage, handling the application, rollback, and seeding of database changes.
  */
 class StageMigration{
+    protected $debug = false;
     /**
      * @var string $_path Path to the migration stage directory.
      */
@@ -36,6 +37,10 @@ class StageMigration{
         $this->_path=$path;
         $this->_db=&$db;
         $this->name=basename($path);
+        $this->debug = array_key_exists( "DEBUG", $_ENV ) ? boolval( $_ENV["DEBUG"] ) : false;
+        if($this->debug){
+            echo "StageMigration initialized for stage '$this->name' at path '$this->_path'.\n";
+        }
     }
 
     /**
@@ -46,13 +51,20 @@ class StageMigration{
      */
     public function apply(){
         $files=$this->getStructure();
+        if($this->debug){
+            echo "Applying migration stage '$this->name'...\n";
+            echo "Found ".count($files)." structure files to execute.\n";
+        }
         foreach($files as $f){
             try{
-                echo "Ejecutando $f...";
+                echo "Execute $f...";
                 $this->_db::statement(file_get_contents($f));
                 echo "OK\n";
             }catch(\Exception $e){
                 echo "ERROR\n";
+                if($this->debug){
+                    echo "\n      ".file_get_contents($f)."\n";
+                }
                 throw new Exception("Error en archivo $f: ".$e->getMessage());
             }
         }

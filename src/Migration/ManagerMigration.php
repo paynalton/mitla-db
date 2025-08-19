@@ -12,6 +12,7 @@ use Illuminate\Database\Capsule\Manager as Base;
  * Extends the Illuminate\Database\Capsule\Manager for database operations.
  */
 class ManagerMigration extends Base{
+    protected $debug = false;
 
     /**
      * @var EnvConfig $_credentials Stores environment/database credentials.
@@ -27,6 +28,12 @@ class ManagerMigration extends Base{
     {
         if($config){
             $this->setCredentials($config);
+        }
+        $this->debug = array_key_exists( "DEBUG", $_ENV ) ? boolval( $_ENV["DEBUG"] ) : false;
+        if($this->debug){
+            echo "ManagerMigration initialized with debug mode ON.\n";
+        }else{
+            echo "ManagerMigration initialized with debug mode OFF.\n";
         }
     }
 
@@ -50,6 +57,12 @@ class ManagerMigration extends Base{
      * @return void
      */
     public function up($fresh=false,$seed=false,$stageTo=null){
+        if($this->debug){
+            echo "Applying migrations...\n";
+            echo "Fresh: ".($fresh ? 'true' : 'false')."\n";
+            echo "Seed: ".($seed ? 'true' : 'false')."\n";
+            echo "Stage to: ".($stageTo ? $stageTo : 'null')."\n";
+        }
         if($fresh){
             $this->dropAll();
             $current=null;
@@ -59,6 +72,9 @@ class ManagerMigration extends Base{
         }
         $stages=$this->getStages($current,$stageTo);
         foreach($stages as $s){
+            if($this->debug){
+                echo "Applying migration stage: ".$s->name."\n";
+            }
             $s->apply();
             if($seed){
                 $s->seed();
@@ -113,6 +129,10 @@ class ManagerMigration extends Base{
      * @return array Array of StageMigration objects.
      */
     protected function getStages($from=null,$to=null){
+        if($this->debug){
+            echo "Fetching migration stages...\n";
+            echo "Getting migration stages from '$from' to '$to'\n";
+        }
         $origins = [];
         $stages=[];
         $stagesObj=[];
@@ -122,6 +142,12 @@ class ManagerMigration extends Base{
             $currentPath = getcwd() .'/modules/'.$module.'/migration/source';
             if(is_dir($currentPath)) {
                 $origins[]=$currentPath;
+            }
+        }
+        if($this->debug){
+            echo "Origins for migration stages:\n";
+            foreach($origins as $origin){
+                echo "- $origin\n";
             }
         }
         foreach($origins as $origin){
@@ -143,9 +169,13 @@ class ManagerMigration extends Base{
                 continue;
             }
             if($to && $k > $to){
+                
                 continue;
             }
             foreach($stage as $path){
+                if($this->debug){
+                    echo "Creating StageMigration object for stage '$k' at path '$path'\n";
+                }
                 $stagesObj[]= new StageMigration($path,$this);
             }
         }
